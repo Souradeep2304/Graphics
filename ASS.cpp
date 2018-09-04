@@ -24,7 +24,7 @@ glVertex2f(0,240);
 glEnd();
 
 }
-  void putPixel (int x, int y,int a,int b,int c)  
+  void put (int x, int y,int a,int b,int c)  
  {  
    glColor3f (a,b,c); 
    glBegin (GL_POINTS);  
@@ -55,7 +55,7 @@ void display(int x0, int y0, int x1, int y1,int a, int b, int c)
              x1 = x0;  
             y1 = y0;  
         }  
-      putPixel (x, y,a,b,c);  
+      put (x, y,a,b,c);  
    while (x < x1)  
   {  
         if (d < 0)  
@@ -71,7 +71,7 @@ void display(int x0, int y0, int x1, int y1,int a, int b, int c)
           }  
             }  
    x++;  
-       putPixel (x, y,a,b,c);  
+       put (x, y,a,b,c);  
       }  
        }  
        else {   
@@ -88,7 +88,7 @@ void display(int x0, int y0, int x1, int y1,int a, int b, int c)
              y1 = y0;  
              x1 = x0;  
             }  
-            putPixel (x, y,a,b,c);   
+            put (x, y,a,b,c);   
        while (y < y1)  
         {  
              if (d < 0)  
@@ -103,7 +103,7 @@ void display(int x0, int y0, int x1, int y1,int a, int b, int c)
                    }  
               }  
               y++;  
-              putPixel (x, y,a,b,c);  
+              put (x, y,a,b,c);  
        }  
        }  
  
