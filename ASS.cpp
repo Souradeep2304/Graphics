@@ -63,11 +63,11 @@ void display(int x0, int y0, int x1, int y1,int a, int b, int c)
        else {  
             if (y < y1) {  
               y++;  
-             d += dt;  
+             d += dt;  //pk+1=pk + 2*(dy-dx)
              }   
             else {  
               y--;  
-           d += dt;  
+           d += dt;  //pk+1=pk + 2*(dy-dx)
           }  
             }  
    x++;  
@@ -96,10 +96,10 @@ void display(int x0, int y0, int x1, int y1,int a, int b, int c)
              else {  
                      if (x > x1){  
                      x--;  
-                      d += dt;  
+                      d += dt;   //pk+1=pk+2*(dx-dy)
                    } else {  
                      x++;  
-                     d += dt;  
+                     d += dt;  //pk+1=pk+2*(dx-dy)
                    }  
               }  
               y++;  
@@ -167,10 +167,13 @@ char string3[64]="Shishir Goyal";
 char string4[64]="Siddharth Sharma";
 char string5[64]="X";
 char string6[64]="Y";
-name(0.0f,25.0f,string1,1,0,0);
+char string7[64]="CG Assignment";
+
+	name(0.0f,25.0f,string1,1,0,0);
 	name(0.0f,50.0f,string2,0,1,0);
 	name(0.0f,75.0f,string3,255,165,0);
 	name(0.0f,100.0f,string4,0,0,1);
+	name(320.f,460.0f,string7,255,0,0);
 	//name(5,475,string5,1,1,1);
 	//name(475,5,string6,1,1,1);
 glFlush();
