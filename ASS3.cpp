@@ -1,4 +1,3 @@
-#include <math.h>
 #include <GL/glut.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -22,14 +21,16 @@ int i=0;
 int m=0;
 int o=0;
 int a2[500];int b2[500];
-
+char string1[64]="Shivansh Thapliyal";
+char string2[64]="Souradeep Banerjee";
+char string3[64]="Yash Saraswat";
 
 int max ( int a, int b ) { return a > b ? a : b; }
 int min ( int a, int b ) { return a > b ? b : a; }
 
 
 
-int computeCode(double x, double y) 
+int reg(double x, double y) 
 { 
   
     int code = INSIDE; 
@@ -46,86 +47,77 @@ int computeCode(double x, double y)
     return code; 
 } 
 
-void cohenSutherlandClip(double x1, double y1, 
+void intersect(double x1, double y1, 
                          double x2, double y2,int *u1, int *v1, int *u2,int *v2) 
 { 
-    // Compute region codes for P1, P2 
-    int code1 = computeCode(x1, y1); 
-    int code2 = computeCode(x2, y2); 
-  
-    // Initialize line as outside the rectangular window 
+
+    int code1 = reg(x1, y1); 
+    int code2 = reg(x2, y2); 
+ 
     bool accept = false; 
   
     while (true) 
     { 
         if ((code1 == 0) && (code2 == 0)) 
         { 
-            // If both endpoints lie within rectangle 
+  
             accept = true; 
             break; 
         } 
         else if (code1 & code2) 
         { 
-            // If both endpoints are outside rectangle, 
-            // in same region 
+  
             break; 
         } 
         else
         { 
-            // Some segment of line lies within the 
-            // rectangle 
+        
             int code_out; 
             double x, y; 
   
-            // At least one endpoint is outside the  
-            // rectangle, pick it. 
+ 
             if (code1 != 0) 
                 code_out = code1; 
             else
                 code_out = code2; 
   
-            // Find intersection point; 
-            // using formulas y = y1 + slope * (x - x1), 
-            // x = x1 + (1 / slope) * (y - y1) 
             if (code_out & TOP) 
             { 
-                // point is above the clip rectangle 
+         
                 x = x1 + (x2 - x1) * (y_max - y1) / (y2 - y1); 
                 y = y_max; 
             } 
             else if (code_out & BOTTOM) 
             { 
-                // point is below the rectangle 
+           
                 x = x1 + (x2 - x1) * (y_min - y1) / (y2 - y1); 
                 y = y_min; 
             } 
             else if (code_out & RIGHT) 
             { 
-                // point is to the right of rectangle 
+           
                 y = y1 + (y2 - y1) * (x_max - x1) / (x2 - x1); 
                 x = x_max; 
             } 
             else if (code_out & LEFT) 
             { 
-                // point is to the left of rectangle 
+          
                 y = y1 + (y2 - y1) * (x_min - x1) / (x2 - x1); 
                 x = x_min; 
             } 
   
-            // Now intersection point x,y is found 
-            // We replace point outside rectangle 
-            // by intersection point 
+     
             if (code_out == code1) 
             { 
                 x1 = x; 
                 y1 = y; 
-                code1 = computeCode(x1, y1); 
+                code1 = reg(x1, y1); 
             } 
             else
             { 
                 x2 = x; 
                 y2 = y; 
-                code2 = computeCode(x2, y2); 
+                code2 = reg(x2, y2); 
             } 
         } 
     } 
@@ -203,13 +195,12 @@ void draw(void)
 	gluOrtho2D(0.0, 640.0, 0.0,480.0);
 
 	
-char string1[64]="Shivansh Thapliyal";
-char string2[64]="Souradeep Banerjee";
+
 
 char string7[64]="CG Assignment 2";
-
-	name(0.0f,25.0f,string1,1,0,0);
-	name(0.0f,50.0f,string2,0,1,0);
+	name(0.0f,75.0f,string2,1,0,0);	
+	name(0.0f,25.0f,string1,0,0,5);
+	name(0.0f,50.0f,string3,0,1,0);
 
 glColor3f(1,1,1);
 	glBegin(GL_LINE_STRIP);
@@ -247,7 +238,7 @@ int u1, v1, u2, v2;
 
 for(int m=0;m<i-1;m++)
 {
-cohenSutherlandClip(a[m], b[m],a[m+1],b[m+1],&u1,&v1,&u2,&v2 );
+intersect(a[m], b[m],a[m+1],b[m+1],&u1,&v1,&u2,&v2 );
 a2[o]=u1;
 b2[o]=v1;
 a3[o]=u2;
@@ -262,6 +253,10 @@ void drawlines(int a[], int b[], int c[], int d[])
 {
 glClearColor(0, 0, 0,0);
 glClear(GL_COLOR_BUFFER_BIT);
+name(0.0f,75.0f,string2,1,0,0);	
+	name(0.0f,25.0f,string1,0,0,5);
+	name(0.0f,50.0f,string3,0,1,0);
+
 glColor3f(1,1,1);
 	glBegin(GL_LINE_STRIP);
 		glVertex2f(160.0f,120.0f);
@@ -273,10 +268,16 @@ glVertex2f(160.0f,120.0f);
 glFlush();
 glColor3f(0,0,139);
 	glBegin(GL_LINE_STRIP);
-for(int n=0;n<o;n++){
-
+for(int n=0;n<o;n++)
+{
 		glVertex2f(a[n],b[n]);
-		glVertex2f(c[n],d[n]);}
+		glVertex2f(c[n],d[n]);
+}
+glEnd();
+glColor3f(0,0,139);
+	glBegin(GL_LINE_STRIP);
+glVertex2f(c[o-1],d[o-1]);
+glVertex2f(a[0],b[0]);
 glEnd();
 glFlush();
 }
@@ -302,16 +303,9 @@ break;
 case 'd' :
 points(a1,b1);
 break;
-/*case 'e' :
-printarr(a2,b2,a3,b3);
-break;*/
 case 'f' :
 drawlines(a2,b2,a3,b3);
-
-
-
-
-
+break;
 }
 }
 
